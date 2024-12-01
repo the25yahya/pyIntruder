@@ -3,7 +3,7 @@ import requests
 
 if __name__ == '__main__':
     def accept_req():
-        print("[*] Paste the HTTP request, end with an empty line:")
+        print("\033[1;31m[*] Paste the HTTP request, end with an empty line:\033[0m")
         user_input = []
         while True:
             line = input()
@@ -24,4 +24,4 @@ if __name__ == '__main__':
                     : ''')
     if pyIntruder_mode == '1':
         mode = BruteForceEngine(req.request)
-        mode.brute_force(input("enter wordlist path"))
+        mode.brute_force()

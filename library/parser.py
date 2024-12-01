@@ -3,6 +3,9 @@ import os
 import html
 import base64
 from urllib.parse import unquote, quote,urlparse, parse_qs
+import readline  # Enable path autocompletion
+from pathlib import Path
+
 
 class Request:
     def __init__(self, request):
@@ -58,8 +61,34 @@ class BruteForceEngine(Request):
         super().__init__(request) 
         self.wordlist = None# Inherit parsed data from Request
     
+    def _autocomplete(self, text, state):
+        """
+        Autocomplete file paths.
+        """
+        directory, _, partial_filename = text.rpartition('/')
+        if not directory:
+            directory = '.'
+        
+        # List files and directories in the specified directory
+        try:
+            matches = [f for f in os.listdir(directory) if f.startswith(partial_filename)]
+            return os.path.join(directory, matches[state]) if state < len(matches) else None
+        except FileNotFoundError:
+            return None
+    
     def brute_force(self):
-        self.wordlist = input("\033[1;31m[*]Enter wordlist path\033[0m")
+        # Enable autocomplete for file paths
+        readline.set_completer(self._autocomplete)
+        readline.parse_and_bind("tab: complete")
+
+        while True:
+            self.wordlist = input("\033[1;31m[*]Enter wordlist path: \033[0m")
+            # Check if the file exists at the given path
+            if os.path.exists(self.wordlist) and os.path.isfile(self.wordlist):
+                break  # Exit the loop if file is valid
+            else:
+                print(f"\033[1;31m[!] Error: The file at {self.wordlist} does not exist or is not a valid file. Please try again.\033[0m")
+
+        # Proceed with brute-forcing logic using the valid wordlist
         print("Brute forcing the URL with query parameters:", self.urlQueryParams)
         # Use self.urlQueryParams for brute-forcing or any other logic
-    
