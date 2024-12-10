@@ -19,12 +19,12 @@ class Request:
         self.headers = {}
         self.body = None
         self.parsed_request = []
-        self.parse_request(request)
+        self.parse_request()
         
     
-    def parse_request(self,request):
+    def parse_request(self):
         ## parsing the http request and setting the attributes
-        lines = request.strip().split("\n")
+        lines = self.request.strip().split("\n")
         ## parsing the first line (method , url , protocol)
         request_line = lines[0].strip()
         parts = request_line.split(maxsplit=2)
@@ -51,42 +51,8 @@ class Request:
             self.body = self.body.strip()
 
         self.url = f"https://{self.headers.get('Host', '')}{self.path}"
-        parsed_url = urlparse(self.url)
 
-    def interactive_fuzzing(self):
-        # Display the request interactively and let the user wrap terms for fuzzing
-        current_index = 0
+        #(self.url)
 
-        while True:
-            # Clear the screen and display the parsed request
-            print("\033[H\033[J", end="")
-            print("Navigate with ↑ and ↓. Press Enter to wrap term with §TERM§. Press Esc to exit.\n")
-            for i, line in enumerate(self.parsed_request):
-                if i == current_index:
-                    print(f"> {line}")
-                else:
-                    print(f"  {line}")
 
-            key = keyboard.read_event()
-
-            if key.event_type == "down":
-                if key.name == "down" and current_index < len(self.parsed_request) - 1:
-                    current_index += 1
-                elif key.name == "up" and current_index > 0:
-                    current_index -= 1
-                elif key.name == "enter":
-                    # Wrap the selected line or part of it
-                    selected_line = self.parsed_request[current_index]
-                    print("\nEnter the term you want to wrap:")
-                    term_to_wrap = input(f"Line: {selected_line}\n> ")
-                    wrapped_line = selected_line.replace(term_to_wrap, f"§{term_to_wrap}§")
-                    self.parsed_request[current_index] = wrapped_line
-                elif key.name == "esc":
-                    # Exit the interactive session
-                    break
-
-        # Display the updated request
-        print("\nUpdated Request:")
-        for line in self.parsed_request:
-            print(line)
 
