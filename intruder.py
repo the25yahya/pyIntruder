@@ -13,6 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('-w', '--wordlist', type=str, help="Path to the wordlist file",required=True)
     parser.add_argument('-f', '--file', type=str, help="Path to the requestfile")
     parser.add_argument('-o', '--output', type=str, help="Path to the write results")
+    parser.add_argument('--http', action='store_true', help="use http instead of https")
     parser.add_argument('-M', '--mode',default='fuzzing', type=str, help='''
     intruder execution mode : 
     for simple fuzzing ignore this arg (simple fuzzing is the default mode)
@@ -31,6 +32,8 @@ if __name__ == '__main__':
     output_path = args.output
     wordlist = args.wordlist
     choice = args.mode
+    http_true = args.http if args.http else None
+
     if not sys.stdin.isatty():
         request = read_stdin()
     elif args.file:
@@ -38,7 +41,7 @@ if __name__ == '__main__':
 
     if choice =='fuzzing':
         #request = accept_req()
-        req = Request(request)
+        req = Request(request,http_true)
         engine = Engine(wordlist)
         threads = []
         try:

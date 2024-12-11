@@ -18,9 +18,21 @@ class Engine:
                         'url': req.request.url,
                         'status_code': req.status_code,
                         'headers': dict(req.headers),  
-                        'body': req.json() if req.status_code == 200 else req.text, 
-                        'reason': req.reason,  
+                        'reason': req.reason
                     }
+                    content_type = req.headers.get('Content-Type', '').lower()
+                    if 'image' in content_type or 'application/octet-stream' in content_type:
+                        # Handle binary data (image)
+                        req_details['body'] = req.content  # Use the raw binary content
+                    else:
+                        # Handle textual data (JSON or text)
+                        if req.status_code == 200:
+                            try:
+                                req_details['body'] = req.json()  # Try to parse as JSON
+                            except ValueError:
+                                req_details['body'] = req.text  # Fallback to plain text
+                        else:
+                            req_details['body'] = req.text  # For non-200 status codes, use text
                     
                     # Print request details 
                     print(f"\033[1;31m[*] Sending request :\033[0m \033[1;32m{req.request.method}\033[0m \033[1;33m{req.request.url}\033[0m")

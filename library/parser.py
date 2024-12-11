@@ -10,7 +10,7 @@ import keyboard
 
 
 class Request:
-    def __init__(self,request):
+    def __init__(self,request,http):
         self.request = request
         self.method = None
         self.path = None
@@ -19,6 +19,7 @@ class Request:
         self.headers = {}
         self.body = None
         self.parsed_request = []
+        self.http = http
         self.parse_request()
         
     
@@ -50,7 +51,7 @@ class Request:
         if self.body:
             self.body = self.body.strip()
 
-        self.url = f"https://{self.headers.get('Host', '')}{self.path}"
+        self.url = f"{"http"if self.http else "https"}://{self.headers.get('Host', '')}{self.path}"
 
         #(self.url)
 
