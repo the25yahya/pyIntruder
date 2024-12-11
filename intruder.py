@@ -12,6 +12,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--threads', type=int, help="Number of threads")
     parser.add_argument('-w', '--wordlist', type=str, help="Path to the wordlist file",required=True)
     parser.add_argument('-f', '--file', type=str, help="Path to the requestfile")
+    parser.add_argument('-o', '--output', type=str, help="Path to the write results")
     parser.add_argument('-M', '--mode',default='fuzzing', type=str, help='''
     intruder execution mode : 
     for simple fuzzing ignore this arg (simple fuzzing is the default mode)
@@ -27,6 +28,7 @@ if __name__ == '__main__':
 
     # Access the values of the arguments
     threads_arg = args.threads
+    output_path = args.output
     wordlist = args.wordlist
     choice = args.mode
     if not sys.stdin.isatty():
@@ -39,12 +41,18 @@ if __name__ == '__main__':
         req = Request(request)
         engine = Engine(wordlist)
         threads = []
-        for i in range(threads_arg if threads_arg else 5):
-            thread = threading.Thread(target=engine.fuzz, args=(req.method, req.url))
-            thread.start()
-            threads.append(thread)
+        try:
+            for i in range(threads_arg if threads_arg else 5):
+                thread = threading.Thread(target=engine.fuzz, args=(req.method, req.url))
+                thread.start()
+                threads.append(thread)
 
-        for thread in threads:
-            thread.join()
+            for thread in threads:
+                thread.join()
 
+        except KeyboardInterrupt:
+            print("\nProcess interrupted. Saving results...")
+            engine.write_output(output_path if output_path else "pyIntruder_results.txt")
+            sys.exit(0)  # Exit cleanly after saving results
+        engine.write_output(output_path if output_path else "pyIntruder_results.txt")
         print("\033[1;33m FINISHED FUZZING")
