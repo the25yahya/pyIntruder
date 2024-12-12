@@ -24,6 +24,7 @@ if __name__ == '__main__':
                         -M sqli for sql injection
                         -M CI for command injection
                         -M PT for path traversal
+                        -M OR for open redirect
     ''')
     args = parser.parse_args()
 
@@ -41,7 +42,7 @@ if __name__ == '__main__':
 
     if choice =='fuzzing':
         #request = accept_req()
-        req = Request(request,http_true)
+        req = Request(request,http_true,mode='fuzzing')
         engine = Engine(wordlist)
         threads = []
         try:
@@ -59,3 +60,6 @@ if __name__ == '__main__':
             sys.exit(0)  # Exit cleanly after saving results
         engine.write_output(output_path if output_path else "pyIntruder_results.txt")
         print("\033[1;33m FINISHED FUZZING")
+    
+    elif choice == 'OR':
+        pass
