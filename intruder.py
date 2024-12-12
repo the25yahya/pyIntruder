@@ -42,8 +42,8 @@ if __name__ == '__main__':
 
     if choice =='fuzzing':
         #request = accept_req()
-        req = Request(request,http_true,mode='fuzzing')
-        engine = Engine(wordlist)
+        req = Request(request,http_true)
+        engine = Engine(wordlist,mode='fuzzing')
         threads = []
         try:
             for i in range(threads_arg if threads_arg else 5):
@@ -62,4 +62,6 @@ if __name__ == '__main__':
         print("\033[1;33m FINISHED FUZZING")
     
     elif choice == 'OR':
-        pass
+        req = Request(request,http_true)
+        engine = Engine(wordlist,mode='OR')
+        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,threads_arg if threads_arg else None)
