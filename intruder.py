@@ -9,23 +9,19 @@ import sys
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="Example script")
-    parser.add_argument('-t', '--threads', type=int, help="Number of threads")
+    parser.add_argument('-t', '--threads', type=int, help="Number of threads",default=5)
     parser.add_argument('-w', '--wordlist', type=str, help="Path to the wordlist file",required=True)
     parser.add_argument('-f', '--file', type=str, help="Path to the requestfile")
     parser.add_argument('-o', '--output', type=str, help="Path to the write results")
     parser.add_argument('--http', action='store_true', help="use http instead of https")
-    parser.add_argument('-M', '--mode',default='fuzzing', type=str, help='''
-    intruder execution mode : 
-    for simple fuzzing ignore this arg (simple fuzzing is the default mode)
-    for fuzzing in a specific mode use : 
-                        -M xss for cross site scripting
-                        -M ord for open redirects
-                        -M ssti for server side template injection
-                        -M sqli for sql injection
-                        -M CI for command injection
-                        -M PT for path traversal
-                        -M OR for open redirect
-    ''')
+
+    # add subparsers
+    subparsers = parser.add_subparsers(dest="mode")
+    xss_subparser = subparsers.add_parser("xss",help="xss mode")
+    open_redirect_subpsarser = subparsers.add_parser("OR",help="open redirect mode")
+    ssti_subparser = subparsers.add_parser("ssti",help="ssti mode")
+
+
     args = parser.parse_args()
 
     # Access the values of the arguments
@@ -39,29 +35,15 @@ if __name__ == '__main__':
         request = read_stdin()
     elif args.file:
         request = read_file(args.file)
+    else:
+        parser.error("Either provide input via stdin or specify a file with --file")
 
-    if choice =='fuzzing':
-        #request = accept_req()
-        req = Request(request,http_true)
-        engine = Engine(wordlist,mode='fuzzing')
-        threads = []
-        try:
-            for i in range(threads_arg if threads_arg else 5):
-                thread = threading.Thread(target=engine.fuzz, args=(req.method, req.url))
-                thread.start()
-                threads.append(thread)
-
-            for thread in threads:
-                thread.join()
-
-        except KeyboardInterrupt:
-            print("\nProcess interrupted. Saving results...")
-            engine.write_output(output_path if output_path else "pyIntruder_results.txt")
-            sys.exit(0)  # Exit cleanly after saving results
-        engine.write_output(output_path if output_path else "pyIntruder_results.txt")
-        print("\033[1;33m FINISHED FUZZING")
-    
-    elif choice == 'OR':
+    if args.mode == "OR":
         req = Request(request,http_true)
         engine = Engine(wordlist,mode='OR')
         start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,threads_arg if threads_arg else None)
+    else :
+        req = Request(request,http_true)
+        engine = Engine(wordlist,mode='fuzzing')
+        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,threads_arg if threads_arg else None)
+    

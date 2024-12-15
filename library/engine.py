@@ -1,5 +1,5 @@
 import requests
-import re
+from urllib.parse import urlparse
 
 class Engine:
     def __init__(self, wordlist,mode):
@@ -22,7 +22,8 @@ class Engine:
                             'url': req.request.url,
                             'status_code': req.status_code,
                             'headers': dict(req.headers),  
-                            'reason': req.reason
+                            'reason': req.reason,
+                            'response_body_length': len(req.content) 
                         }
                         content_type = req.headers.get('Content-Type', '').lower()
                         if 'image' in content_type or 'application/octet-stream' in content_type:
@@ -45,7 +46,7 @@ class Engine:
                         # Append the dictionary to the list of responses
                         self.reqs_responses.append(req_details)
         elif self.mode == 'OR':
-            url_regex = r'(https?://[^\s]+)'
+            #url_regex = r'(https?://[^\s]+)'
             self.success_payloads = []
             if method.upper() == 'GET':  
                 with open(str(self.wordlist), 'r') as file:
@@ -62,26 +63,32 @@ class Engine:
                             'reason': req.reason
                         }
                         
-                        match = re.search(url_regex,line)
-                        if match:
-                            redirect_url = match.group(0)
-                        else:
-                            redirect_url = None
+                        #match = re.search(url_regex,line)
+                        #if match:
+                            #redirect_url = match.group(0)
+                        #else:
+                            #redirect_url = None
                         # Print request details 
                         print(f"\033[1;31m[*] Sending request :\033[0m \033[1;32m{req.request.method}\033[0m \033[1;33m{req.request.url}\033[0m")
-                        print(f"\031[1;31m[*] payload : {line}, url : {redirect_url}\033[0m")
+                        print(f"\031[1;31m[*] payload : {line} \033[0m")
                         print(f"Status Code: {req.status_code}")
 
-                        if req.history and redirect_url :
+                        
+                        if req.history:
                             for resp in req.history:
-                                if resp.url == redirect_url:
+                                redirect_host = urlparse(resp.url).netloc
+                                original_host = urlparse(req.request.url).netloc
+                                if original_host != redirect_host  :
+                                    print(f"\033[1;31m[!] Open Redirect Found!\033[0m Redirected to: {resp.url}")
                                     self.success_payloads.append({
-                                        "url" : resp.url,
-                                        "payload" : line
+                                        "original_url": req.request.url,
+                                        "redirected_url": resp.url,
+                                        "payload": line.strip()
                                     })
                         # Append the dictionary to the list of responses
                         self.reqs_responses.append(req_details)
-                        print(self.success_payloads)
+                        for value in self.success_payloads:
+                            print(value)
 
 
     def write_output(self, output_file):
