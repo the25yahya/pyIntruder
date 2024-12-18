@@ -1,5 +1,6 @@
 import sys
 import threading
+import time
 
 def accept_req():
         print("\033[1;31m[*] Paste the HTTP request(use FUZZ as a placeholder for the sentence you want to fuzz), end with an empty line:\033[0m")
@@ -23,7 +24,8 @@ def read_file(file_path):
     return request
 
 
-def start_fuzz(target_func, func_args,output_path,engine, threads_num=None):
+def start_fuzz(target_func, func_args,output_path,engine,wordlist_length, threads_num=None):
+        start_time = time.perf_counter()
         threads = []
         try:
             for i in range(threads_num if threads_num else 5):
@@ -39,4 +41,7 @@ def start_fuzz(target_func, func_args,output_path,engine, threads_num=None):
             engine.write_output(output_path if output_path else "pyIntruder_results.txt")
             sys.exit(0)  # Exit cleanly after saving results
         engine.write_output(output_path if output_path else "pyIntruder_results.txt")
+        end_time = time.perf_counter()
+        elapsed = end_time - start_time
         print("\033[1;33m FINISHED FUZZING")
+        print(f"[*]sent {wordlist_length} requests in {elapsed:.6f}")

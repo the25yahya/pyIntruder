@@ -28,6 +28,7 @@ if __name__ == '__main__':
     threads_arg = args.threads
     output_path = args.output
     wordlist = args.wordlist
+    wordlist_length = len(wordlist)
     choice = args.mode
     http_true = args.http if args.http else None
 
@@ -41,9 +42,9 @@ if __name__ == '__main__':
     if args.mode == "OR":
         req = Request(request,http_true)
         engine = Engine(wordlist,mode='OR')
-        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,threads_arg if threads_arg else None)
+        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,wordlist_length,threads_arg if threads_arg else None)
     else :
         req = Request(request,http_true)
         engine = Engine(wordlist,mode='fuzzing')
-        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,threads_arg if threads_arg else None)
+        start_fuzz(engine.fuzz,[req.method,req.url],output_path,engine,wordlist_length,threads_arg if threads_arg else None)
     
