@@ -70,7 +70,7 @@ class Engine:
                             #redirect_url = None
                         # Print request details 
                         print(f"\033[1;31m[*] Sending request :\033[0m \033[1;32m{req.request.method}\033[0m \033[1;33m{req.request.url}\033[0m")
-                        print(f"\031[1;31m[*] payload : {line} \033[0m")
+                        print(f"\033[1;31m[*] payload : {line} \033[0m")
                         print(f"Status Code: {req.status_code}")
 
                         

@@ -1,0 +1,16 @@
+GET /accountmerge?redirectTo=FUZZ HTTP/1.1
+Host: www.hotwire.com
+Cookie: _abck=8024DA07DA44DB648EACB6993183387C~-1~YAAQSJgQAqoNTrmTAQAAVakt9A3vdSBut8NBzf8zBRFQEKQfrjYwlFkexJwFSRwyQPBnctv2W7zSGGx8mLhZnS/0OozFrDORhNwUYxL2scQyLdQfnblC4JxB8PK4nRuZMOANfyffmd992ifbOVzkyuihNji1INNPiJZYwDEF6gvkHPlC1LgicR65y57KlQz6rgxKIPQEVnPCB+ON0wMEhcyf+K33utGxTMYhKeYd9YSlQSjDDDVp8H6v+sCZkf7qtkOck89ULUtgfA+japy9qJ+X/PC7H34n6HLUxWlWEwI+tjg0/aMmTxFH0lpkJ8EnonIlXDm7ePjKuYaJe5KJ1lrqD8rtR1duIQ6/nJ84mXikCAWitd/9u/c/znhPRd50p8gXz08atVSZegj97ziZAQSXitHJicI7uRmVmHik9YCvUayz/7viUPQC0bXZM10A43wAyPo8/MtcatW/v05eaxPkH5W/nyOBOMQfu+o7sO0aFnddQ9sdckI=~-1~||0||~-1; SaneID=6e16f716-2e74-43d8-b2f9-6e5eef2fc9aa; hwcl=2568127029922164359; _cls_v=bdbbbca3-e02b-4e4e-bafc-ea6b50380cb8; utag_main=v_id:0193f04db4e700220a967ad937e40504e001801100bd0$_sn:2$_se:1$_ss:1$_st:1734970251626$ses_id:1734968451626%3Bexp-session$_pn:1%3Bexp-session$db_x8bvw5rt:true%3Bexp-session$dc_visit:1$dc_event:1%3Bexp-session$dc_region:eu-west-1%3Bexp-session; RT="z=1&dm=www.hotwire.com&si=d8508f10-5388-4706-a40e-d31723856456&ss=m517f2tc&sl=1&tt=4fr&bcn=%2F%2F02179914.akstat.io%2F&ld=582&ul=3vzr&hd=3w4b"; AMCV_C00802BE5330A8350A490D4C%40AdobeOrg=-1124106680%7CMCIDTS%7C20080%7CMCMID%7C38990659576664406593483290439358320329%7CMCAAMLH-1735573252%7C6%7CMCAAMB-1735573252%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1734975652s%7CNONE%7CvVersion%7C5.2.0%7CMCAID%7CNONE; s_ecid=MCMID%7C38990659576664406593483290439358320329; s_getNewRepeat=1734968452996-New; s_vnum=1735686000784%26vn%3D1; s_DaysSinceLastVisit=1734968452997; _gcl_au=1.1.580939360.1734968459; _uetsid=4e72fcc0c14411efb4bccb5000044650; _uetvid=4e731470c14411ef95a76d5a3f4174a8; _ga=GA1.2.129221130.1734968459; _gid=GA1.2.1510256552.1734968459; gcstp=42080563526573; gcshp=GUID=6e16f7162e7443d8b2f96e5eef2fc9aa; brwsr=4eab238a-c144-11ef-86a5-f968c7f8cf3f; irtps=1; IR_PI=4eab238a-c144-11ef-86a5-f968c7f8cf3f%7C1734968459017; _fbp=fb.1.1734968459955.92213606581743734; cto_bundle=9rUc_l9VbkVhbEVicGtWUXJzZVlxaFZTQzZ2YSUyRktHMiUyRiUyQnhUamtFU3lxY1ZSTVBTVXNpTzA0RktnWHdReXVncDRpRFZTSTJTT0VMaWNXcXNTUHlvUWZyYVNFcFFHVm5iQm0zdG5VTVd5M0ZXZnpyUzZEOHdyR1BGWXFCcFBEbzI3dlNYQ1Z0c1pUYmFpaW90bWluZGlRM0lsanclM0QlM0Q; LPVID=RlZmRiMzQ4MDZjZmU3ODM3
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+Connection: keep-alive
+

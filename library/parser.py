@@ -6,7 +6,6 @@ from urllib.parse import unquote, quote,urlparse, parse_qs, urlencode
 import readline  
 import threading
 from pathlib import Path
-import keyboard
 
 
 class Request:
