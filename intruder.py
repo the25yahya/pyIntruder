@@ -8,7 +8,7 @@ import sys
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description="Example script")
+    parser = argparse.ArgumentParser(description="python fuzzer")
     parser.add_argument('-t', '--threads', type=int, help="Number of threads",default=5)
     parser.add_argument('-w', '--wordlist', type=str, help="Path to the wordlist file",required=True)
     parser.add_argument('-f', '--file', type=str, help="Path to the requestfile")
